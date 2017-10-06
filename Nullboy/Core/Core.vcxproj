@@ -115,13 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\emulator\cartridge\cartridge.cpp" />
     <ClCompile Include="src\emulator\emulator.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utility\commands\commands.cpp" />
+    <ClCompile Include="src\utility\logging\logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\emulator\cartridge\cartridge.hpp" />
     <ClInclude Include="src\emulator\emulator.hpp" />
     <ClInclude Include="src\utility\commands\commands.hpp" />
+    <ClInclude Include="src\utility\logging\logger.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

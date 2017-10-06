@@ -14,6 +14,12 @@
     <Filter Include="src\utility\commands">
       <UniqueIdentifier>{385fc88c-f04b-4fa8-8629-7101479787c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\utility\logging">
+      <UniqueIdentifier>{c8781feb-63ea-4271-839b-9499c1a34c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\emulator\cartridge">
+      <UniqueIdentifier>{72131efc-c9ba-48dc-9d38-cc40d6ee101f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -25,6 +31,12 @@
     <ClCompile Include="src\utility\commands\commands.cpp">
       <Filter>src\utility\commands</Filter>
     </ClCompile>
+    <ClCompile Include="src\utility\logging\logger.cpp">
+      <Filter>src\utility\logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\emulator\cartridge\cartridge.cpp">
+      <Filter>src\emulator\cartridge</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\emulator\emulator.hpp">
@@ -32,6 +44,12 @@
     </ClInclude>
     <ClInclude Include="src\utility\commands\commands.hpp">
       <Filter>src\utility\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\logging\logger.hpp">
+      <Filter>src\utility\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\cartridge\cartridge.hpp">
+      <Filter>src\emulator\cartridge</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
