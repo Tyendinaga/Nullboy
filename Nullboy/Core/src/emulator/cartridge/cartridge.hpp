@@ -10,8 +10,8 @@ class Cartridge
 	private:
 
 		//Readable Data
-		std::vector<char> MEMa;
-		std::vector<char>::iterator MEMi;
+		std::vector<unsigned char> MEMa;
+		std::vector<unsigned char>::iterator MEMi;
 
 		//
 

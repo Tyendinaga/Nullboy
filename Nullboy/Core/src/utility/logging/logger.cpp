@@ -21,3 +21,11 @@ void Logger::log(std::string qualifier, std::string message)
 	std::cout << qualifier << message << std::endl;
 
 }
+
+void Logger::log(std::string qualifier, unsigned char message)
+{
+	//Forward everything to the Console for Now
+	//-----------------------------------------
+
+	std::cout << qualifier << std::hex << (int)message << std::endl;
+}

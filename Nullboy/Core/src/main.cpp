@@ -6,7 +6,7 @@
 
 //Custom Shit
 #include "utility\commands\commands.hpp";
-#include "utility\logging\logger.hpp"
+#include "utility\logging\logger.hpp";
 #include "emulator\cartridge\cartridge.hpp"
 
 int main(int argc, char* argv[])
