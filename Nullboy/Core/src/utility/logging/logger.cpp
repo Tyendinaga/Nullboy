@@ -1,48 +1,72 @@
 //Standard Shit
 #include <iostream>
+#include <sstream>
 
 //Custom Shit
 #include "logger.hpp"
 
-void Logger::log(std::string message)
+void Logger::log(int logLevel, std::string message)
 {
-	//Forward everything to the Console for Now
-	//-----------------------------------------
-
-	std::cout << "DEBUG: " << message << std::endl;
-
+	log(logLevel, message, "");
 }
 
-void Logger::log(std::string qualifier, std::string message)
+void Logger::log(int logLevel, std::string message, unsigned char data)
 {
-	//Forward everything to the Console for Now
-	//-----------------------------------------
+	//Convert incoming Byte to HEX
+	//----------------------------
+	std::stringstream stream;
+	stream << "0x" << std::hex << (int)data;
+	std::string hexCode = stream.str();
 
-	std::cout << qualifier << message << std::endl;
-
+	log(logLevel, message, hexCode);
 }
 
-void Logger::log(std::string qualifier, unsigned char message)
+void Logger::log(int logLevel, std::string message, std::string data)
 {
-	//Forward everything to the Console for Now
-	//-----------------------------------------
 
-	std::cout << qualifier << std::hex << (int)message << std::endl;
-}
+	std::string qualifier;
 
-void Logger::log(int Level, std::string message)
-{
-	switch (Level)
+	switch (logLevel)
 	{
-		case LogLevel::DBUG :
-		{			
+		case LogLevel::DEBUG :
+		{		
+			qualifier = "DEBUG: ";
 			break;
 		}
 
-		case LogLevel::SEVR : 
+		case LogLevel::INFO:
 		{
-			std::cout << "SEVR: " << message << std::endl;
+			qualifier = "INFO: ";
+			break;
+		}
+
+		case LogLevel::WARNING:
+		{
+			qualifier = "WARNING: ";
+			break;
+		}
+
+		case LogLevel::ERROR:
+		{
+			qualifier = "ERROR: ";
+			break;
+		}
+
+		case LogLevel::SEVERE : 
+		{
+			qualifier = "SEVERE: ";
+			break;
+		}
+
+		default: 
+		{
+			qualifier = "UNKNOWN: ";
 			break;
 		}
 	}
+
+	//FORWARD EVERYTHING TO THE CONSOLE, FOR NOW
+	//------------------------------------------
+
+	std::cout << qualifier << message << " " << data << std::endl;
 }

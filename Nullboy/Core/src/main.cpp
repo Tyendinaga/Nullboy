@@ -15,26 +15,26 @@ int main(int argc, char* argv[])
 	//--------------------------
 	try 
 	{
-		Logger::log("INFO: ","BEGINNING PROGRAM EXECUTION");
+		Logger::log(Logger::INFO,"BEGINNING PROGRAM EXECUTION");
 
 		//Parse Commandline Arguments
 		//---------------------------
-		Logger::log("INFO: ", "PREPARING TO PARSE ARGUMENTS");
+		Logger::log(Logger::INFO, "PREPARING TO PARSE ARGUMENTS");
 		Commands command(argc, argv);
 
 		//Load Cartridge into Memory
 		//--------------------------
-		Logger::log("INFO: ", "PREPARING TO LOAD CARTRIDGE");
+		Logger::log(Logger::INFO, "PREPARING TO LOAD CARTRIDGE");
 		Cartridge cart(command.getFile());
 
 		//Begin the Emulation
 		//-------------------
-		Logger::log("INFO: ", "PREPARING TO START EMULATOR");
+		Logger::log(Logger::INFO, "PREPARING TO START EMULATOR");
 
 	}
 	catch (const std::invalid_argument& e)
 	{
-		Logger::log("ERROR: " , e.what());
+		Logger::log(Logger::ERROR, e.what());
 		return EXIT_FAILURE;
 	}
 	

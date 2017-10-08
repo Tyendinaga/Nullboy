@@ -11,7 +11,7 @@ Cartridge::Cartridge(std::string fileName)
 	
 	//LOAD CARTRIDGE DATA
 	//-------------------
-	Logger::log("INFO: ", "LOADING CARTRIDGE " + fileName);
+	Logger::log(Logger::INFO, "LOADING CARTRIDGE", fileName);
 
 	std::ifstream data;
 	data.open(fileName, std::ios::in | std::ios::binary);
@@ -37,7 +37,7 @@ Cartridge::Cartridge(std::string fileName)
 		data.seekg(0, std::ios_base::beg);
 		data.read((char*)&MEMa[0], length);
 
-		Logger::log("INFO: LOADED ", std::to_string(length / 1024) + "KB");
+		Logger::log(Logger::INFO, "LOADED", std::to_string(length / 1024) + "KB");
 
 	}
 
@@ -55,7 +55,7 @@ Cartridge::Cartridge(std::string fileName)
 void Cartridge::verify()
 {
 
-	Logger::log("INFO: ", "VERIFYING CARTRIDGE");
+	Logger::log(Logger::INFO, "VERIFYING CARTRIDGE");
 
 	//BITMAP VERIFICATION
 	//-------------------
@@ -69,7 +69,7 @@ void Cartridge::verify()
 	//00 08 11 1F 88 89 00 0E DC CC 6E E6 DD DD D9 99
 	//BB BB 67 63 6E 0E EC CC DD DC 99 9F BB B9 33 3E
 
-	Logger::log("INFO: ", "BEGINNING BITMAP VERIFICATION");
+	Logger::log(Logger::INFO, "BEGINNING BITMAP VERIFICATION");
 
 	std::vector<unsigned char> BMPa = 
 	{ 
@@ -88,7 +88,7 @@ void Cartridge::verify()
 
 		if (*BMPi != *MEMi)
 		{
-			Logger::log("ERROR: ", "BITMAP VALIDATION FAILED");
+			Logger::log(Logger::ERROR, "BITMAP VALIDATION FAILED");
 			break;
 		}
 		else
@@ -108,13 +108,13 @@ void Cartridge::verify()
 	//The header checksum check takes values from 0134 to 014C and checksums them. 
 	//This checksum value is stored at 014D
 
-	Logger::log("INFO: ", "BEGINNING CHECKSUM VERIFICATION");
+	Logger::log(Logger::INFO, "BEGINNING CHECKSUM VERIFICATION");
 
 	MEMi = MEMa.begin() + 0x014D;
 	headerChecksum = *MEMi;
 	unsigned char tempChecksum = 0;
 
-	Logger::log("INFO: Header Checksum: ", *MEMi);
+	Logger::log(Logger::INFO,"Header Checksum", *MEMi);
 
 	//This is Probably Dumb
 	unsigned short i = 0x0134;
@@ -130,7 +130,11 @@ void Cartridge::verify()
 
 	if (tempChecksum == headerChecksum)
 	{
-		Logger::log("INFO: ", "CHECKSUM VERIFICATION SUCCEEDED");
+		Logger::log(Logger::INFO, "CHECKSUM VERIFICATION SUCCEEDED");
+	}
+	else
+	{
+		Logger::log(Logger::ERROR, "CHECKSUM VERIFICATION SUCCEEDED");
 	}
 
 	//GLOBAL CHECKSUM VERIFICATION

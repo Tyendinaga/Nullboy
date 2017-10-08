@@ -21,7 +21,7 @@ Commands::Commands(int argc, char* argv[])
 		
 		//Convert Argument to String
 		std::string arg = argv[i];
-		Logger::log("ARGUMENT: ", arg);
+		Logger::log(Logger::INFO,"ARGUMENT", arg);
 
 		//Indicates the next argument is a file name
 		if (arg == "-f")
