@@ -29,3 +29,20 @@ void Logger::log(std::string qualifier, unsigned char message)
 
 	std::cout << qualifier << std::hex << (int)message << std::endl;
 }
+
+void Logger::log(int Level, std::string message)
+{
+	switch (Level)
+	{
+		case LogLevel::DBUG :
+		{			
+			break;
+		}
+
+		case LogLevel::SEVR : 
+		{
+			std::cout << "SEVR: " << message << std::endl;
+			break;
+		}
+	}
+}
