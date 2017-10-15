@@ -123,6 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\emulator\cartridge\cartridge.hpp" />
+    <ClInclude Include="src\emulator\cartridge\data\cartridgeHeader.hpp" />
+    <ClInclude Include="src\emulator\cartridge\data\cartridgeIndex.hpp" />
     <ClInclude Include="src\emulator\emulator.hpp" />
     <ClInclude Include="src\utility\commands\commands.hpp" />
     <ClInclude Include="src\utility\logging\logger.hpp" />

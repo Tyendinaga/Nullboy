@@ -47,7 +47,8 @@ Cartridge::Cartridge(std::string fileName)
 	//Perform some basic validation
 	verify();
 
-	//Parse Header
+	//Save That Data
+	loadHeader();
 
 
 }
@@ -80,9 +81,9 @@ void Cartridge::verify()
 
 	std::vector<unsigned char>::iterator BMPi;
 
-	//Iterate through the BMP
+	//Iterate through the Bitmap
 	BMPi = BMPa.begin();
-	MEMi = MEMa.begin() + logoLocation;
+	MEMi = MEMa.begin() + index.logoStart;
 	while (BMPi != BMPa.end())
 	{
 
@@ -111,10 +112,10 @@ void Cartridge::verify()
 	Logger::log(Logger::INFO, "BEGINNING CHECKSUM VERIFICATION");
 
 	MEMi = MEMa.begin() + 0x014D;
-	headerChecksum = *MEMi;
+	header.headerChecksum = *MEMi;
 	unsigned char tempChecksum = 0;
 
-	Logger::log(Logger::INFO,"Header Checksum", *MEMi);
+	Logger::log(Logger::INFO,"HEADER CHECKSUM", *MEMi);
 
 	//This is Probably Dumb
 	unsigned short i = 0x0134;
@@ -128,18 +129,20 @@ void Cartridge::verify()
 	//My Checksum seems to be off by one, consistently. 
 	tempChecksum--;
 
-	if (tempChecksum == headerChecksum)
+	if (tempChecksum == header.headerChecksum)
 	{
 		Logger::log(Logger::INFO, "CHECKSUM VERIFICATION SUCCEEDED");
 	}
 	else
 	{
-		Logger::log(Logger::ERROR, "CHECKSUM VERIFICATION SUCCEEDED");
+		Logger::log(Logger::ERROR, "CHECKSUM VERIFICATION FAILED");
 	}
 
 	//GLOBAL CHECKSUM VERIFICATION
 	//----------------------------
+}
 
-
-
+void Cartridge::loadHeader()
+{
+	header.gameTitle = "DEFAULT";
 }

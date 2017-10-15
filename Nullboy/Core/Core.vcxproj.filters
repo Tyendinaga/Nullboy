@@ -20,6 +20,9 @@
     <Filter Include="src\emulator\cartridge">
       <UniqueIdentifier>{72131efc-c9ba-48dc-9d38-cc40d6ee101f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\emulator\cartridge\data">
+      <UniqueIdentifier>{39ba8046-9604-491c-90c2-60ef89abda08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -50,6 +53,12 @@
     </ClInclude>
     <ClInclude Include="src\emulator\cartridge\cartridge.hpp">
       <Filter>src\emulator\cartridge</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\cartridge\data\cartridgeHeader.hpp">
+      <Filter>src\emulator\cartridge\data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\cartridge\data\cartridgeIndex.hpp">
+      <Filter>src\emulator\cartridge\data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

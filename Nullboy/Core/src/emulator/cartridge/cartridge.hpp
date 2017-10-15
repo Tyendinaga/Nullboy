@@ -1,6 +1,10 @@
 #pragma once
 
-//Standard Shit
+//custom stuff
+#include "emulator\cartridge\data\cartridgeHeader.hpp"
+#include "emulator\cartridge\data\cartridgeIndex.hpp"
+
+//Standard Stuff
 #include<string>
 #include<vector>
 
@@ -13,32 +17,22 @@ class Cartridge
 		std::vector<unsigned char> MEMa;
 		std::vector<unsigned char>::iterator MEMi;
 
-		//Cartridge Header
-		std::string gameTitle;
-		std::string manufacturerCode;
-		unsigned char CGBFlag;
-		std::string newLicenseCode;
-		unsigned char SGBFlag;
-		unsigned char cartridgeType;
-		unsigned char ROMSize;
-		unsigned char RAMSize;
-		unsigned char destinationCode;
-		unsigned char oldLicenseCode;
-		unsigned char ROMversion;
-		unsigned char headerChecksum;
-		unsigned short globalChesksum;
+		//Data Stored in Cartridge Header
+		struct cartridgeHeader header;
+		struct cartridgeIndex index;
 
-
+		/*
 		//Cartridge Data Index
 		int entryPoint = 0x0100;
 		int logoLocation = 0x0104;
 		int titleLocation = 0x0134;
 		int manufacturerLocation = 0x013F;
 		int cgbFlagLocation = 0x0143;
-
+		*/
 
 		//Functions
 		void verify();
+		void loadHeader();
 
 	public:
 		Cartridge(std::string fileName);
