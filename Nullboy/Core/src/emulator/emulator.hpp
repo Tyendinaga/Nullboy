@@ -1,6 +1,6 @@
 #pragma once
 
-//Standard Shit
+//Standard Includes
 #include <string>
 
 class emulator 

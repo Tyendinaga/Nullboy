@@ -1,8 +1,8 @@
-//Standard Shit
+//Standard Includes
 #include <iostream>
 #include <stdexcept>
 
-//Custom Shit
+//Custom Includes
 #include "commands.hpp"
 #include "utility\logging\logger.hpp"
 

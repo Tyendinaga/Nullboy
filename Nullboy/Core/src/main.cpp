@@ -1,10 +1,10 @@
-//Standard Crap
+//Standard Includes
 #include <cstdlib>
 #include <iostream>
 
-//External Shit
+//External Includes
 
-//Custom Shit
+//Custom Includes
 #include "utility\commands\commands.hpp";
 #include "utility\logging\logger.hpp";
 #include "emulator\cartridge\cartridge.hpp"

@@ -1,8 +1,8 @@
-//Standard Things
-#include<fstream>
+//Standard Includes
+#include <fstream>
 #include <stdexcept>
 
-//Custom Things
+//Custom Includes
 #include "cartridge.hpp"
 #include "utility\logging\logger.hpp"
 

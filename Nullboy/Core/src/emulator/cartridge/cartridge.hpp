@@ -1,12 +1,12 @@
 #pragma once
 
-//custom stuff
-#include "emulator\cartridge\data\cartridgeHeader.hpp"
-#include "emulator\cartridge\data\cartridgeIndex.hpp"
-
-//Standard Stuff
+//Standard includes
 #include<string>
 #include<vector>
+
+//custom includes
+#include "emulator\cartridge\data\cartridgeHeader.hpp"
+#include "emulator\cartridge\data\cartridgeIndex.hpp"
 
 class Cartridge 
 {

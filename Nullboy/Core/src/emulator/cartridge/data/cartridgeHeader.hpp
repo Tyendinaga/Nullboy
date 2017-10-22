@@ -1,6 +1,6 @@
 #pragma once
 
-//Standard Stuff
+//Standard includes
 #include <string>
 
 struct cartridgeHeader

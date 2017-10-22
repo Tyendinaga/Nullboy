@@ -1,8 +1,8 @@
-//Standard Shit
+//Standard Includes
 #include <iostream>
 #include <sstream>
 
-//Custom Shit
+//Custom Includes
 #include "logger.hpp"
 
 void Logger::log(int logLevel, std::string message)

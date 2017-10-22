@@ -1,6 +1,6 @@
 #pragma once
 
-//Standard Crap
+//Standard Stuff
 #include <string>
 
 class Logger 
@@ -10,7 +10,6 @@ class Logger
 
 	public:
 
-		
 		enum LogLevel {
 			DEBUG = 0x00,
 			INFO = 0x01,
