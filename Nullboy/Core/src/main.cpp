@@ -8,6 +8,7 @@
 #include "utility\commands\commands.hpp";
 #include "utility\logging\logger.hpp";
 #include "emulator\cartridge\cartridge.hpp"
+#include "emulator\emulator.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -30,6 +31,7 @@ int main(int argc, char* argv[])
 		//Begin the Emulation
 		//-------------------
 		Logger::log(Logger::INFO, "PREPARING TO START EMULATOR");
+		emulator emulator
 
 	}
 	catch (const std::invalid_argument& e)
@@ -38,7 +40,7 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 	
-	//Hold the Execution
+	//Pause the Execution
 	std::cin.get();
 
 	return EXIT_SUCCESS;

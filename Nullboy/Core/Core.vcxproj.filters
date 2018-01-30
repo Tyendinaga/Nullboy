@@ -23,6 +23,9 @@
     <Filter Include="src\emulator\cartridge\data">
       <UniqueIdentifier>{39ba8046-9604-491c-90c2-60ef89abda08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\emulator\processor">
+      <UniqueIdentifier>{8d4b74d2-6bee-4103-8a16-8549a6e405f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -39,6 +42,9 @@
     </ClCompile>
     <ClCompile Include="src\emulator\cartridge\cartridge.cpp">
       <Filter>src\emulator\cartridge</Filter>
+    </ClCompile>
+    <ClCompile Include="src\emulator\processor\processor.cpp">
+      <Filter>src\emulator\processor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="src\emulator\cartridge\data\cartridgeIndex.hpp">
       <Filter>src\emulator\cartridge\data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\processor\processor.hpp">
+      <Filter>src\emulator\processor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

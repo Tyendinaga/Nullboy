@@ -3,11 +3,12 @@
 //Standard Includes
 #include <string>
 
-class emulator 
+class Emulator 
 {
 
 	private:
+		void run();
 
 	public:
-		void run();
+		Emulator();
 };

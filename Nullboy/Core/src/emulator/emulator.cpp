@@ -1,5 +1,14 @@
 #include "emulator.hpp"
 
-void emulator::run()
+void Emulator::run()
 {
+}
+
+Emulator::Emulator()
+{
+	
+
+	//Make the Magic Happen
+	this->run;
+
 }
