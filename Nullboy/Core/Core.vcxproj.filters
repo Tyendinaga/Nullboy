@@ -26,6 +26,9 @@
     <Filter Include="src\emulator\processor">
       <UniqueIdentifier>{8d4b74d2-6bee-4103-8a16-8549a6e405f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\emulator\memory">
+      <UniqueIdentifier>{8525564d-f34a-4ceb-a8fe-08964eb66309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -45,6 +48,9 @@
     </ClCompile>
     <ClCompile Include="src\emulator\processor\processor.cpp">
       <Filter>src\emulator\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\emulator\memory\MemoryController.cpp">
+      <Filter>src\emulator\memory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="src\emulator\processor\processor.hpp">
       <Filter>src\emulator\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\memory\MemoryController.hpp">
+      <Filter>src\emulator\memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

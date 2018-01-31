@@ -142,6 +142,8 @@ void Cartridge::verify()
 	//----------------------------
 }
 
+
+
 void Cartridge::loadHeader()
 {
 	header.gameTitle = "DEFAULT";
