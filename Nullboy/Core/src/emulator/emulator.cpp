@@ -7,7 +7,7 @@ void Emulator::run()
 	{
 		//While shit isn't burning down we'll process things
 		//--------------------------------------------------
-		if (!processor.isHalted)
+		if (!processor.isHalted())
 		{
 			processor.emulateCycle();
 		}
@@ -22,5 +22,5 @@ Emulator::Emulator()
 	emulatorRunning = true;
 
 	//Make the Magic Happen
-	this->run;
+	this->run();
 }

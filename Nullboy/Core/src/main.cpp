@@ -1,15 +1,22 @@
-//Standard Includes
+//STANDARD LIBRARIES
+//------------------
 #include <cstdlib>
 #include <iostream>
 
-//External Includes
+//EXTERNAL LIBRARIES
+//------------------
 
-//Custom Includes
+//PROJECT LIBRARIES
+//-----------------
 #include "utility\commands\commands.hpp";
 #include "utility\logging\logger.hpp";
 #include "emulator\cartridge\cartridge.hpp"
 #include "emulator\emulator.hpp"
 
+#include "emulator\memory\MemoryController.hpp"
+
+//PROGRAM ENTRY POINT
+//-------------------
 int main(int argc, char* argv[])
 {
 	//Pre Setup for Emulator Run

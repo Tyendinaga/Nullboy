@@ -3,7 +3,7 @@
 //Standard Stuff
 #include <string>
 
-static const struct cartridgeIndex
+const struct cartridgeIndex
 {
 	const int entryPointStart = 0x0100;
 	const int entryPointEnd = 0x0103;

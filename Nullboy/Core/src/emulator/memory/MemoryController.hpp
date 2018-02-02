@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 class MemoryController
 {
 
@@ -69,7 +71,7 @@ class MemoryController
 	public:
 		MemoryController();
 
-		void writeByte();
+		void writeByte(int address, char data);
 
 
 

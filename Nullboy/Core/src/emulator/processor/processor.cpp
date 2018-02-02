@@ -34,7 +34,7 @@ void Processor::initialize()
 void Processor::emulateCycle()
 {
 	//Fetch OpCode
-	opcode = memory[programCounter] << 8 | memory[programCounter + 1];
+	//opcode = memory[programCounter] << 8 | memory[programCounter + 1];
 
 	/*
 		Identifying Op Codes
