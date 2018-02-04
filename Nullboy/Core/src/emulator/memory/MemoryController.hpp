@@ -33,7 +33,7 @@ class MemoryController
 		//0000-3FFF
 		unsigned char bank00[0x4000];
 
-		//4000-7FFF
+		//4000-7FFF (Switchable Memory Banks)
 		unsigned char bank01[0x4000];
 
 		//8000-9FFF
@@ -50,6 +50,9 @@ class MemoryController
 
 		//E000-FDFF
 		unsigned char wRAMe[0x2000];
+
+		//TODO: Ensure below variables have appropriate capacity
+		//------------------------------------------------------
 
 		//FE00 - FE9F
 		unsigned char SpriteAtributeTable[0x2000];
