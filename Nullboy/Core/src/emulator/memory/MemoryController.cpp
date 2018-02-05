@@ -10,7 +10,6 @@ MemoryController::MemoryController()
 //Write Information to somewhere on the memory map
 void MemoryController::writeByte(int address, char data)
 {
-	
 	/*
 	//MEMORY MAP
 	0000-3FFF	16KB ROM bank 00	From cartridge, fixed bank
@@ -34,11 +33,11 @@ void MemoryController::writeByte(int address, char data)
 	4KB = 0X1000
 	*/
 
+	//Get the string of the address (For Debugging)
+	std::string location = std::to_string(address);
+
 	//DETEMINE WRITEABLE MEMORY BANK
 	//------------------------------
-
-
-	std::string location = std::to_string(address);
 
 	//0000 - 3FFF	16KB ROM bank 00	From cartridge, fixed bank
 	if (address <= 0x3FFF)
@@ -107,7 +106,11 @@ void MemoryController::writeByte(int address, char data)
 	//FF80 - FFFE	High RAM(HRAM)
 	if (address >= 0xFF80 && address <= 0xFFFE)
 	{ 
-		Logger::log(Logger::DEBUG, "High Ram: " + location);
+		//Logger::log(Logger::DEBUG, "High Ram: " + location);
+
+		//Get Relative Offset so we can work
+		int relativeOffset = address - 0xFF80;
+
 	}
 
 	//FFFF - FFFF	Interrupts Enable Register(IE)

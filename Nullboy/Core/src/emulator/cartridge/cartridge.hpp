@@ -19,7 +19,7 @@ class Cartridge
 
 		//Data Stored in Cartridge Header
 		struct cartridgeHeader header;
-		struct cartridgeIndex index;
+		//struct cartridgeIndex index;
 
 		//Functions
 		void verify();

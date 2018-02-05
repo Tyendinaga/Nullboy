@@ -83,7 +83,7 @@ void Cartridge::verify()
 
 	//Iterate through the Bitmap
 	BMPi = BMPa.begin();
-	MEMi = MEMa.begin() + index.logoStart;
+	MEMi = MEMa.begin() + cartridgeIndex::logoStart;
 	while (BMPi != BMPa.end())
 	{
 
@@ -140,11 +140,26 @@ void Cartridge::verify()
 
 	//GLOBAL CHECKSUM VERIFICATION
 	//----------------------------
+
 }
 
 
 
 void Cartridge::loadHeader()
 {
+	//Get Game Title
 	header.gameTitle = "DEFAULT";
+
+	//Get Cartridge Type
+	MEMi = MEMa.begin() + cartridgeIndex::CartridgeType;
+	header.cartridgeType = *MEMi;
+
+	//Get RAM Size
+	MEMi = MEMa.begin() + cartridgeIndex::RAMSize;
+	header.RAMSize = *MEMi;
+
+	//Get ROM SIZE
+	MEMi = MEMa.begin() + cartridgeIndex::ROMSize;
+	header.ROMSize = *MEMi;
+
 }
