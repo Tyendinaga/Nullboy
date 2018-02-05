@@ -81,6 +81,8 @@ void Cartridge::verify()
 
 	std::vector<unsigned char>::iterator BMPi;
 
+	bool bitmapValid = true;
+
 	//Iterate through the Bitmap
 	BMPi = BMPa.begin();
 	MEMi = MEMa.begin() + cartridgeIndex::logoStart;
@@ -90,6 +92,7 @@ void Cartridge::verify()
 		if (*BMPi != *MEMi)
 		{
 			Logger::log(Logger::ERROR, "BITMAP VALIDATION FAILED");
+			bitmapValid = false;
 			break;
 		}
 		else
@@ -101,6 +104,15 @@ void Cartridge::verify()
 		//Increment
 		BMPi++;
 		MEMi++;
+	}
+
+	if (bitmapValid)
+	{
+		Logger::log(Logger::INFO, "BITMAP VALIDATION SUCCEEDED");
+	}
+	else
+	{
+		Logger::log(Logger::INFO, "BITMAP VALIDATION FAILED");
 	}
 
 	//HEADER CHECKSUM VERIFICATION
@@ -150,16 +162,24 @@ void Cartridge::loadHeader()
 	//Get Game Title
 	header.gameTitle = "DEFAULT";
 
+	Logger::log(Logger::INFO, header.gameTitle);
+
 	//Get Cartridge Type
 	MEMi = MEMa.begin() + cartridgeIndex::CartridgeType;
 	header.cartridgeType = *MEMi;
+
+	Logger::log(Logger::INFO, "Cartridge Type: " ,header.cartridgeType);
 
 	//Get RAM Size
 	MEMi = MEMa.begin() + cartridgeIndex::RAMSize;
 	header.RAMSize = *MEMi;
 
+	Logger::log(Logger::INFO, "RAM Size: ", header.RAMSize);
+
 	//Get ROM SIZE
 	MEMi = MEMa.begin() + cartridgeIndex::ROMSize;
 	header.ROMSize = *MEMi;
+
+	Logger::log(Logger::INFO, "ROM Size: ", header.ROMSize);
 
 }
