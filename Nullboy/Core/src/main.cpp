@@ -22,22 +22,22 @@ int main(int argc, char* argv[])
 	//Pre Setup for Emulator Run
 	//--------------------------
 	try 
-	{
-		Logger::log(Logger::INFO,"BEGINNING PROGRAM EXECUTION");
+	{ 
+		Logger::log(Logger::INFO,"=== BEGINNING PROGRAM EXECUTION");
 
 		//Parse Commandline Arguments
 		//---------------------------
-		Logger::log(Logger::INFO, "PREPARING TO PARSE ARGUMENTS");
+		Logger::log(Logger::INFO, "=== PREPARING TO PARSE ARGUMENTS");
 		Commands command(argc, argv);
 
 		//Load Cartridge into Memory
 		//--------------------------
-		Logger::log(Logger::INFO, "PREPARING TO LOAD CARTRIDGE");
+		Logger::log(Logger::INFO, "=== PREPARING TO LOAD CARTRIDGE");
 		Cartridge cart(command.getFile());
 
 		//Begin the Emulation
 		//-------------------
-		Logger::log(Logger::INFO, "PREPARING TO START EMULATOR");
+		Logger::log(Logger::INFO, "=== PREPARING TO START EMULATOR");
 		Emulator emulator();
 
 	}

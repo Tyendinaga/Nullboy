@@ -9,6 +9,8 @@
 Commands::Commands(int argc, char* argv[])
 {
 
+	Logger::log(Logger::INFO, "=== PARSING ARGUMENTS");
+
 	//Check if Valid number of Arguments
 	//----------------------------------
 	if (argc < 3)

@@ -11,7 +11,9 @@ Cartridge::Cartridge(std::string fileName)
 	
 	//LOAD CARTRIDGE DATA
 	//-------------------
-	Logger::log(Logger::INFO, "LOADING CARTRIDGE", fileName);
+	Logger::log(Logger::INFO, "=== LOADING CARTRIDGE");
+	Logger::log(Logger::INFO, "FILENAME: ", fileName);
+
 
 	std::ifstream data;
 	data.open(fileName, std::ios::in | std::ios::binary);
@@ -56,7 +58,7 @@ Cartridge::Cartridge(std::string fileName)
 void Cartridge::verify()
 {
 
-	Logger::log(Logger::INFO, "VERIFYING CARTRIDGE");
+	Logger::log(Logger::INFO, "=== VERIFYING CARTRIDGE");
 
 	//BITMAP VERIFICATION
 	//-------------------
@@ -159,6 +161,9 @@ void Cartridge::verify()
 
 void Cartridge::loadHeader()
 {
+	Logger::log(Logger::INFO, "=== LOADING CARTRIDGE HEADER");
+
+
 	//Get Game Title
 	header.gameTitle = "DEFAULT";
 
@@ -224,6 +229,15 @@ void Cartridge::loadHeader()
 	header.RAMSize = *MEMi;
 
 	Logger::log(Logger::INFO, "RAM Size: ", header.RAMSize);
+
+	/*
+	 00h - Japanese
+	 01h - Non-Japanese
+	*/
+	MEMi = MEMa.begin() + cartridgeIndex::DestinationCode;
+	header.destinationCode = *MEMi;
+
+	Logger::log(Logger::INFO, "Destination: ", header.destinationCode);
 
 
 
