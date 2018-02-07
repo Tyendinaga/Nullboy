@@ -169,6 +169,30 @@ void Cartridge::loadHeader()
 
 	Logger::log(Logger::INFO, header.gameTitle);
 
+
+	/*
+	 80h - Game supports CGB functions, but works on old gameboys also.
+	 C0h - Game works on CGB only (physically the same as 80h).
+	*/
+
+	//Get CGB Flag
+	MEMi = MEMa.begin() + cartridgeIndex::CGBFlag;
+	header.CGBFlag = *MEMi;
+
+	Logger::log(Logger::INFO, "SGB Flag: ", header.CGBFlag);
+
+	/*
+	 00h = No SGB functions (Normal Gameboy or CGB only game)
+	 03h = Game supports SGB functions
+	*/
+
+	//Get SGB Flag
+	MEMi = MEMa.begin() + cartridgeIndex::SGBFlag;
+	header.SGBFlag = *MEMi;
+
+	Logger::log(Logger::INFO, "SGB Flag: ", header.SGBFlag);
+
+
 	/*
 	 00h  ROM ONLY                 19h  MBC5
 	 01h  MBC1                     1Ah  MBC5+RAM
@@ -239,6 +263,14 @@ void Cartridge::loadHeader()
 
 	Logger::log(Logger::INFO, "Destination: ", header.destinationCode);
 
+	/*
+	00h - Non-Super Game Boy
+	33h - Super Game Boy
+	*/
+	MEMi = MEMa.begin() + cartridgeIndex::oldLicensee;
+	header.oldLicenseCode = *MEMi;
+
+	Logger::log(Logger::INFO, "Old Licensee: ", header.oldLicenseCode);
 
 
 }
