@@ -1,4 +1,5 @@
 #include "emulator.hpp"
+#include "cartridge\cartridge.hpp"
 
 void Emulator::run()
 {
@@ -14,7 +15,7 @@ void Emulator::run()
 	}
 }
 
-Emulator::Emulator()
+Emulator::Emulator(Cartridge cart)
 {
 	
 

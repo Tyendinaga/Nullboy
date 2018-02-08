@@ -179,7 +179,7 @@ void Cartridge::loadHeader()
 	MEMi = MEMa.begin() + cartridgeIndex::CGBFlag;
 	header.CGBFlag = *MEMi;
 
-	Logger::log(Logger::INFO, "SGB Flag: ", header.CGBFlag);
+	Logger::log(Logger::INFO, "CGB Flag: ", header.CGBFlag);
 
 	/*
 	 00h = No SGB functions (Normal Gameboy or CGB only game)

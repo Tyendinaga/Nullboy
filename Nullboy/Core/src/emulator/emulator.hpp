@@ -5,6 +5,7 @@
 
 //Custom Includes
 #include "processor\processor.hpp"
+#include "cartridge\cartridge.hpp"
 
 class Emulator 
 {
@@ -18,5 +19,5 @@ class Emulator
 		
 
 	public:
-		Emulator();
+		Emulator(Cartridge cart);
 };

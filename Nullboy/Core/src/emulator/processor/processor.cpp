@@ -39,7 +39,6 @@ void Processor::emulateCycle()
 	/*
 		Identifying Op Codes
 		No Idea, Yet
-
 	*/
 
 	//Do Magic
