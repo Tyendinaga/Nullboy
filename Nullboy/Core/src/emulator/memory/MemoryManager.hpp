@@ -2,7 +2,7 @@
 
 
 
-class MemoryController
+class MemoryManager
 {
 
 	/*
@@ -72,7 +72,7 @@ class MemoryController
 
 
 	public:
-		MemoryController();
+		MemoryManager();
 
 		void writeByte(int address, char data);
 

@@ -1,14 +1,14 @@
-#include "MemoryController.hpp"
+#include "MemoryManager.hpp"
 #include "utility\logging\logger.hpp"
 
 
-MemoryController::MemoryController()
+MemoryManager::MemoryManager()
 {
 
 }
 
 //Write Information to somewhere on the memory map
-void MemoryController::writeByte(int address, char data)
+void MemoryManager::writeByte(int address, char data)
 {
 	/*
 	//MEMORY MAP

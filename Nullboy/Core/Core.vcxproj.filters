@@ -49,7 +49,7 @@
     <ClCompile Include="src\emulator\processor\processor.cpp">
       <Filter>src\emulator\processor</Filter>
     </ClCompile>
-    <ClCompile Include="src\emulator\memory\MemoryController.cpp">
+    <ClCompile Include="src\emulator\memory\MemoryManager.cpp">
       <Filter>src\emulator\memory</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,7 +75,7 @@
     <ClInclude Include="src\emulator\processor\processor.hpp">
       <Filter>src\emulator\processor</Filter>
     </ClInclude>
-    <ClInclude Include="src\emulator\memory\MemoryController.hpp">
+    <ClInclude Include="src\emulator\memory\MemoryManager.hpp">
       <Filter>src\emulator\memory</Filter>
     </ClInclude>
   </ItemGroup>

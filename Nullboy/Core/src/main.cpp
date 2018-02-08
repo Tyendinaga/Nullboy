@@ -13,7 +13,7 @@
 #include "emulator\cartridge\cartridge.hpp"
 #include "emulator\emulator.hpp"
 
-#include "emulator\memory\MemoryController.hpp"
+#include "emulator\memory\MemoryManager.hpp"
 
 //PROGRAM ENTRY POINT
 //-------------------

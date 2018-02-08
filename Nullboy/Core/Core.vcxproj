@@ -117,7 +117,7 @@
   <ItemGroup>
     <ClCompile Include="src\emulator\cartridge\cartridge.cpp" />
     <ClCompile Include="src\emulator\emulator.cpp" />
-    <ClCompile Include="src\emulator\memory\MemoryController.cpp" />
+    <ClCompile Include="src\emulator\memory\MemoryManager.cpp" />
     <ClCompile Include="src\emulator\processor\processor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utility\commands\commands.cpp" />
@@ -128,7 +128,7 @@
     <ClInclude Include="src\emulator\cartridge\data\cartridgeHeader.hpp" />
     <ClInclude Include="src\emulator\cartridge\data\cartridgeIndex.hpp" />
     <ClInclude Include="src\emulator\emulator.hpp" />
-    <ClInclude Include="src\emulator\memory\MemoryController.hpp" />
+    <ClInclude Include="src\emulator\memory\MemoryManager.hpp" />
     <ClInclude Include="src\emulator\processor\processor.hpp" />
     <ClInclude Include="src\utility\commands\commands.hpp" />
     <ClInclude Include="src\utility\logging\logger.hpp" />
