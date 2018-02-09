@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 		//Begin the Emulation
 		//-------------------
 		Logger::log(Logger::INFO, "=== PREPARING TO START EMULATOR");
-		Emulator emulator(cart);
+		Emulator emulator(cart, command);
 
 	}
 	catch (const std::invalid_argument& e)

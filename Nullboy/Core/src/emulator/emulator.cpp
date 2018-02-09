@@ -15,11 +15,8 @@ void Emulator::run()
 	}
 }
 
-Emulator::Emulator(Cartridge cart)
+Emulator::Emulator(Cartridge cart, Commands command)
 {
-	
-
-
 	emulatorRunning = true;
 
 	//Make the Magic Happen

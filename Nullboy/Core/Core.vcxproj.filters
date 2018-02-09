@@ -29,6 +29,9 @@
     <Filter Include="src\emulator\memory">
       <UniqueIdentifier>{8525564d-f34a-4ceb-a8fe-08964eb66309}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\emulator\memory\controllers">
+      <UniqueIdentifier>{fb13f720-32ec-456b-b0ea-1242f9781db8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
