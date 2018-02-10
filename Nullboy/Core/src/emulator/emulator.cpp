@@ -1,5 +1,14 @@
+//STANDARD LIBRARIES
+//------------------
+
+//EXTERNAL LIBRARIES
+//------------------
+
+//PROJECT LIBRARIES
+//-----------------
 #include "emulator.hpp"
 #include "cartridge\cartridge.hpp"
+#include "utility\logging\logger.hpp"
 
 void Emulator::run()
 {
@@ -17,6 +26,9 @@ void Emulator::run()
 
 Emulator::Emulator(Cartridge cartridge, Commands command)
 {
+	this->cartridge = cartridge;
+	this->commands = command;
+
 	emulatorRunning = true;
 
 	//Make the Magic Happen
