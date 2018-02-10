@@ -15,7 +15,7 @@ void Emulator::run()
 	}
 }
 
-Emulator::Emulator(Cartridge cart, Commands command)
+Emulator::Emulator(Cartridge cartridge, Commands command)
 {
 	emulatorRunning = true;
 

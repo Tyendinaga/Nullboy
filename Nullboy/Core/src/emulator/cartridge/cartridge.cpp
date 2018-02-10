@@ -55,6 +55,10 @@ Cartridge::Cartridge(std::string fileName)
 
 }
 
+Cartridge::Cartridge()
+{
+}
+
 void Cartridge::verify()
 {
 

@@ -35,6 +35,10 @@ Commands::Commands(int argc, char* argv[])
 	}
 }
 
+Commands::Commands()
+{
+}
+
 std::string Commands::getFile()
 {
 	return fileName;

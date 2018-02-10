@@ -10,6 +10,7 @@ class Commands {
 
 	public:
 		Commands(int argc, char* argv[]);
+		Commands();
 
 		std::string getFile();
 

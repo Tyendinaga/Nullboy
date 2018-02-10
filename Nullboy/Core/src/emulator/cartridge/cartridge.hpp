@@ -26,5 +26,6 @@ class Cartridge
 
 	public:
 		Cartridge(std::string fileName);
+		Cartridge();
 
 };

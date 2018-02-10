@@ -25,5 +25,5 @@ class Emulator
 		bool emulatorRunning;
 
 	public:
-		Emulator(Cartridge cart, Commands command);
+		Emulator(Cartridge cartridge, Commands commands);
 };
