@@ -31,19 +31,19 @@ void Processor::initialize()
 
 }
 
-void Processor::emulateCycle()
+void Processor::emulateCycle(MemoryManager memory)
 {
-	//Fetch OpCode
-	//opcode = memory[programCounter] << 8 | memory[programCounter + 1];
 
-	/*
-		Identifying Op Codes
-		No Idea, Yet
-	*/
+	//Hit a Road Block. Not sure how to decode the Z80 Codes
+
+	opcode = memory.readByte(programCounter) << 8 | memory.readByte(programCounter + 1);
 
 	//Do Magic
 	switch (opcode & 0xf000)
 	{
+
+
+
 		//Situation Normal, All fucked up. 
 		default:
 		{
@@ -55,11 +55,11 @@ void Processor::emulateCycle()
 	if (!halted)
 	{
 		programCounter += 2;
-		Logger::log(Logger::DEBUG, "Processed Code: 0x", opcode);
+		Logger::log(Logger::DEBUG, "Processed Code: ", opcode);
 	}
 	else
 	{
-		Logger::log(Logger::DEBUG, "Unknown Opcode: 0x", opcode);
+		Logger::log(Logger::DEBUG, "Unknown Opcode: ", opcode);
 	}
 
 }

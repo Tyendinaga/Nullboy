@@ -120,3 +120,18 @@ void MemoryManager::writeByte(int address, char data)
 		interruptsRegister = data;
 	}
 }
+
+char MemoryManager::readByte(int address)
+{
+	char data;
+
+	//0000 - 3FFF	16KB ROM bank 00	From cartridge, fixed bank
+	if (address <= 0x3FFF)
+	{
+		//Logger::log(Logger::DEBUG, "Bank 00: " + location);
+
+		data = bank00[address];
+	}
+
+	return data;
+}

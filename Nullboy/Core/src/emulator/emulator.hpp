@@ -16,6 +16,7 @@ class Emulator
 		
 		//Methods
 		void run();
+		void loadMemory();
 
 		//Variables
 		Processor processor;
@@ -30,3 +31,4 @@ class Emulator
 	public:
 		Emulator(Cartridge cartridge, Commands commands);
 };
+

@@ -59,6 +59,12 @@ Cartridge::Cartridge()
 {
 }
 
+unsigned char Cartridge::readByte(int address)
+{
+	MEMi = MEMa.begin() + address;
+	return *MEMi;
+}
+
 void Cartridge::verify()
 {
 
@@ -275,6 +281,4 @@ void Cartridge::loadHeader()
 	header.oldLicenseCode = *MEMi;
 
 	Logger::log(Logger::INFO, "Old Licensee: ", header.oldLicenseCode);
-
-
 }

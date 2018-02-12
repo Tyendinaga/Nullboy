@@ -1,5 +1,7 @@
 #pragma once
 
+#include "emulator\memory\MemoryManager.hpp"
+
 class Processor
 {
 
@@ -29,7 +31,7 @@ class Processor
 		Processor();
 
 		void initialize();
-		void emulateCycle();
+		void emulateCycle(MemoryManager memory);
 
 		bool isHalted();
 

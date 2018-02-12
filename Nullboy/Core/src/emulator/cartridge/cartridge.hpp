@@ -28,4 +28,7 @@ class Cartridge
 		Cartridge(std::string fileName);
 		Cartridge();
 
+		unsigned char readByte(int address);
+
+
 };
