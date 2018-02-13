@@ -10,7 +10,7 @@ void Logger::log(int logLevel, std::string message)
 	log(logLevel, message, "");
 }
 
-void Logger::log(int logLevel, std::string message, unsigned char data)
+void Logger::log(int logLevel, std::string message, unsigned short data)
 {
 	//Convert incoming Byte to HEX
 	//----------------------------

@@ -20,6 +20,6 @@ class Logger
 
 		//Logging Functions
 		static void log(int logLevel, std::string message);
-		static void log(int logLevel, std::string message, unsigned char data);
+		static void log(int logLevel, std::string message, unsigned short data);
 		static void log(int logLevel, std::string message, std::string data);
 };

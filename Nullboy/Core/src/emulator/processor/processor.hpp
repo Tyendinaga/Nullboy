@@ -8,8 +8,8 @@ class Processor
 	private:
 		bool halted; //Debug use Only
 
-		//2 Bytes
-		unsigned short opcode;
+		//1 Byte?
+		unsigned char opcode;
 
 		//Registers
 		unsigned short AFRegister;

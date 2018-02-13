@@ -36,12 +36,51 @@ void Processor::emulateCycle(MemoryManager memory)
 
 	//Hit a Road Block. Not sure how to decode the Z80 Codes
 
-	opcode = memory.readByte(programCounter) << 8 | memory.readByte(programCounter + 1);
+	opcode = memory.readByte(programCounter);
 
 	//Do Magic
-	switch (opcode & 0xf000)
+	switch (opcode)
 	{
 
+		
+		//00 Series
+		case 0x00:
+		{	
+			//Wate Time for Four Cycles
+			Logger::log(Logger::DEBUG, "NOP");
+			break;
+		}
+
+		//10
+
+		//20
+
+		//30
+
+		//40
+
+		//50
+
+		//60
+
+		//70
+
+		//80
+
+		//90
+
+		//A0
+
+		//B0
+
+		//C0
+
+		case 0xC3:
+		{
+			//JUMP
+			Logger::log(Logger::DEBUG, "JPnn");
+			break;
+		}
 
 
 		//Situation Normal, All fucked up. 
@@ -54,7 +93,7 @@ void Processor::emulateCycle(MemoryManager memory)
 	//Increment memory position provided we are not halted.
 	if (!halted)
 	{
-		programCounter += 2;
+		programCounter += 1;
 		Logger::log(Logger::DEBUG, "Processed Code: ", opcode);
 	}
 	else
