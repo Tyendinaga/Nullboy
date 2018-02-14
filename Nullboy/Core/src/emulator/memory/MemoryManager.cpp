@@ -50,7 +50,11 @@ void MemoryManager::writeByte(int address, char data)
 	//4000 - 7FFF	16KB ROM Bank 01~NN	From cartridge, switchable bank via MBC(if any)
 	if (address >= 0x4000 && address <= 0x7FFF)
 	{
-		Logger::log(Logger::DEBUG, "Bank XX: " + location);
+		//Logger::log(Logger::DEBUG, "Bank XX: " + location);
+
+		//Shift the address a bit so it's relevant to this memory bank
+		int localAddress = address - 0x4000;
+		bank01[localAddress] = data;
 	}
 
 	//8000 - 9FFF	8KB Video RAM(VRAM)	Only bank 0 in Non - CGB mode Switchable bank 0 / 1 in CGB mode
@@ -129,8 +133,17 @@ char MemoryManager::readByte(int address)
 	if (address <= 0x3FFF)
 	{
 		//Logger::log(Logger::DEBUG, "Bank 00: " + location);
-
 		data = bank00[address];
+	}
+
+	//4000 - 7FFF	16KB ROM Bank 01~NN	From cartridge, switchable bank via MBC(if any)
+	if (address >= 0x4000 && address <= 0x7FFF)
+	{
+		//Logger::log(Logger::DEBUG, "Bank XX: " + location);
+		int localAddress = address - 0x4000;
+		data = bank01[localAddress];
+
+
 	}
 
 	return data;

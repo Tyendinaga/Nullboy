@@ -35,8 +35,10 @@ void Processor::emulateCycle(MemoryManager memory)
 {
 
 	//Hit a Road Block. Not sure how to decode the Z80 Codes
-
+	//Turns out I have to read them as 8bits instead of 16bits. 
+	//This means a lot of bitwise operations in my future. 
 	opcode = memory.readByte(programCounter);
+	
 
 	//Do Magic
 	switch (opcode)
@@ -46,8 +48,13 @@ void Processor::emulateCycle(MemoryManager memory)
 		//00 Series
 		case 0x00:
 		{	
-			//Wate Time for Four Cycles
+			//Wait Time for Four Cycles
 			Logger::log(Logger::DEBUG, "NOP");
+			
+			//Update Program Counter
+			programCounter += 1;
+
+			//Blow this popsicle stand
 			break;
 		}
 
@@ -79,6 +86,16 @@ void Processor::emulateCycle(MemoryManager memory)
 		{
 			//JUMP
 			Logger::log(Logger::DEBUG, "JPnn");
+
+			//Combine the Next two data values into a new Program Counter Value
+			//TODO Shorten this into a single line. 
+			unsigned short target = memory.readByte(programCounter + 1);
+			target <<=CHAR_BIT;
+			target += memory.readByte(programCounter + 2);
+
+			//Complete Jump to New Value
+			programCounter = target;
+
 			break;
 		}
 
@@ -91,9 +108,11 @@ void Processor::emulateCycle(MemoryManager memory)
 	}
 
 	//Increment memory position provided we are not halted.
+	//This logic I pulled from my CHIP8 Emulator isn't going to cut it here.
+	//The variable length instructions will see to that. 
 	if (!halted)
 	{
-		programCounter += 1;
+		//programCounter += 1;
 		Logger::log(Logger::DEBUG, "Processed Code: ", opcode);
 	}
 	else

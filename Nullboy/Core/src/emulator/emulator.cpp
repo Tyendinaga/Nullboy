@@ -41,7 +41,8 @@ void Emulator::loadMemory()
 
 
 
-	for (int i = 0x0000; i <= 0x3FFF; i++)
+	//for (int i = 0x0000; i <= 0x3FFF; i++)
+	for (int i = 0x0000; i <= 0x7FFF; i++)
 	{
 		unsigned char data = cartridge.readByte(i);
 		memory.writeByte(i, data);
