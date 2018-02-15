@@ -3,16 +3,22 @@
 
 //EXTERNAL LIBRARIES
 //------------------
+#include <glad\glad.h>
+#include <GLFW\glfw3.h>
 
 //PROJECT LIBRARIES
 //-----------------
 #include "emulator.hpp"
 #include "cartridge\cartridge.hpp"
 #include "utility\logging\logger.hpp"
+#include "emulator\display\display.hpp"
+
 
 void Emulator::run()
 {
-	
+	display window;
+
+	window.initialize();
 
 
 	//We're Live
@@ -20,7 +26,7 @@ void Emulator::run()
 	processor.initialize();
 
 	//Emulator Loop
-	while (emulatorRunning)
+	while (emulatorRunning && !window.shouldClose())
 	{
 		//While shit isn't burning down we'll process things
 		//--------------------------------------------------
@@ -28,7 +34,13 @@ void Emulator::run()
 		{
 			processor.emulateCycle(memory);
 		}
+
+
+		//Base GLFW Stuff to keep the window happy till I get things working
+		glfwPollEvents();
 	}
+
+	glfwTerminate();
 }
 
 void Emulator::loadMemory()

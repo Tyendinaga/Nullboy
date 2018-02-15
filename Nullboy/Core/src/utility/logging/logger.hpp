@@ -14,7 +14,7 @@ class Logger
 			DEBUG = 0x00,
 			INFO = 0x01,
 			WARNING = 0x02,
-			ERROR = 0x03,
+			PROBLEM = 0x03,
 			SEVERE = 0x04,
 		};
 

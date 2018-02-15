@@ -83,11 +83,3 @@ class MemoryManager
 		char readByte(int address);
 
 };
-
-//Wondering if the memory map I've made can be remade as some
-//struct + union shenanigans
-struct
-{
-
-
-};

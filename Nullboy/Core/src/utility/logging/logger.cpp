@@ -46,7 +46,7 @@ void Logger::log(int logLevel, std::string message, std::string data)
 			break;
 		}
 
-		case LogLevel::ERROR:
+		case LogLevel::PROBLEM:
 		{
 			qualifier = "ERROR: ";
 			break;

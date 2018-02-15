@@ -103,7 +103,7 @@ void Cartridge::verify()
 
 		if (*BMPi != *MEMi)
 		{
-			Logger::log(Logger::ERROR, "BITMAP VALIDATION FAILED");
+			Logger::log(Logger::PROBLEM, "BITMAP VALIDATION FAILED");
 			bitmapValid = false;
 			break;
 		}
@@ -159,7 +159,7 @@ void Cartridge::verify()
 	}
 	else
 	{
-		Logger::log(Logger::ERROR, "CHECKSUM VERIFICATION FAILED");
+		Logger::log(Logger::PROBLEM, "CHECKSUM VERIFICATION FAILED");
 	}
 
 	//GLOBAL CHECKSUM VERIFICATION

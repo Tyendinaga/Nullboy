@@ -15,6 +15,10 @@
 
 #include "emulator\memory\MemoryManager.hpp"
 
+//#ifdef _MSC_VER
+//#    pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+//#endif
+
 //PROGRAM ENTRY POINT
 //-------------------
 int main(int argc, char* argv[])
@@ -43,7 +47,7 @@ int main(int argc, char* argv[])
 	}
 	catch (const std::invalid_argument& e)
 	{
-		Logger::log(Logger::ERROR, e.what());
+		Logger::log(Logger::PROBLEM, e.what());
 		return EXIT_FAILURE;
 	}
 	

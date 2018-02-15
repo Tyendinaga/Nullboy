@@ -32,6 +32,9 @@
     <Filter Include="src\emulator\memory\controllers">
       <UniqueIdentifier>{fb13f720-32ec-456b-b0ea-1242f9781db8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\emulator\display">
+      <UniqueIdentifier>{e4a26bc8-d55e-469f-9c59-0e7c1b7d9add}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -54,6 +57,12 @@
     </ClCompile>
     <ClCompile Include="src\emulator\memory\MemoryManager.cpp">
       <Filter>src\emulator\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\emulator\display\glad.c">
+      <Filter>src\emulator\display</Filter>
+    </ClCompile>
+    <ClCompile Include="src\emulator\display\display.cpp">
+      <Filter>src\emulator\display</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="src\emulator\memory\MemoryManager.hpp">
       <Filter>src\emulator\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\display\display.hpp">
+      <Filter>src\emulator\display</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
