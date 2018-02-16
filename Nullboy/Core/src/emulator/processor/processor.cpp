@@ -15,10 +15,11 @@ void Processor::initialize()
 	//----------------------------------------
 
 	//Default Register Values
-	AFRegister = 0x01B0;
-	BCRegister = 0x0013;
-	DERegister = 0x00D8;
-	HLRegister = 0x014D;
+
+	AFRegister.both = 0x01B0;
+	BCRegister.both = 0x0013;
+	DERegister.both = 0x00D8;
+	HLRegister.both = 0x014D;
 	
 	//Stack
 	stackPointer = 0xFFFE;
@@ -65,8 +66,47 @@ void Processor::emulateCycle(MemoryManager memory)
 		//30
 
 		//40
+		case 0x48:
+		{
+			//LD C, B
+
+			//Copy B to C
+			BCRegister.lo = BCRegister.hi;
+
+			//Update Program Counter
+			programCounter += 1;
+
+			break;
+		}
+
+		case 0x49:
+		{
+			//LD C, C
+
+			//Copy C to C
+			BCRegister.lo = BCRegister.lo;
+
+			//Update Program Counter
+			programCounter += 1;
+
+			break;
+		}
+
+		case 0x4A:
+		{
+			//LD C, D
+
+			//Copy D to C
+			BCRegister.lo = DERegister.hi;
+
+			//Update Program Counter
+			programCounter += 1;
+
+			break;
+		}
 
 		//50
+
 
 		//60
 

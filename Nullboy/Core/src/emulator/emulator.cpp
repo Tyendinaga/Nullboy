@@ -28,12 +28,15 @@ void Emulator::run()
 	//Emulator Loop
 	while (emulatorRunning && !window.shouldClose())
 	{
-		//While shit isn't burning down we'll process things
-		//--------------------------------------------------
+		//While things aren't burning down we will process things
+		//-------------------------------------------------------
 		if (!processor.isHalted())
 		{
 			processor.emulateCycle(memory);
+			window.drawGraphics();
+			
 		}
+
 
 
 		//Base GLFW Stuff to keep the window happy till I get things working

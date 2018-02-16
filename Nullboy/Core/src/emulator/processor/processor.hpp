@@ -2,6 +2,21 @@
 
 #include "emulator\memory\MemoryManager.hpp"
 
+
+//Registers
+struct gameboyRegister
+{
+	union
+	{
+		unsigned short both;
+		struct
+		{
+			char hi;
+			char lo;
+		};
+	};
+};
+
 class Processor
 {
 
@@ -11,21 +26,16 @@ class Processor
 		//1 Byte?
 		unsigned char opcode;
 
-		//Registers
-		unsigned short AFRegister;
-		unsigned short BCRegister;
-		unsigned short DERegister;
-		unsigned short HLRegister;
+		gameboyRegister AFRegister;
+		gameboyRegister BCRegister;
+		gameboyRegister DERegister;
+		gameboyRegister HLRegister;
 
 		//Stack & Stack Pointer
 		unsigned short stackPointer;
 
 		//Program Counter 
 		unsigned short programCounter;
-
-
-
-
 
 	public:
 		Processor();
@@ -36,3 +46,4 @@ class Processor
 		bool isHalted();
 
 };
+
