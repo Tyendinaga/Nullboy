@@ -35,7 +35,7 @@ bool Processor::isHalted()
 	return halted;
 }
 
-unsigned short Processor::getImmediate()
+unsigned short Processor::getImmediate16()
 {
 	//Get 16 Bit Immediate Value			
 	gameboyRegister temp;
@@ -199,6 +199,12 @@ void Processor::emulateCycle(MemoryManager memory)
                                                      
 		case 0x10: 
 		{
+			//STOP 0
+			//2  4
+			//----
+
+			//Stops Gameboy until a Button proess
+
 			//Unimplemented
 			halted = true;
 			break;
@@ -206,8 +212,12 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x11:
 		{
-			//Unimplemented
-			halted = true;
+			//LD DE, d16
+			//3 12
+			//- - - -
+
+			DERegister.both = getImmediate16();
+			advanceCounter(3);
 			break;
 		}
 
@@ -325,8 +335,14 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x21:
 		{
-			//Unimplemented
-			halted = true;
+			//LD HL, d16
+			//3 12
+			//- - - -
+			
+			HLRegister.both = getImmediate16();
+
+			advanceCounter(3);
+
 			break;
 		}
 
@@ -605,8 +621,13 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x47:
 		{
-			//Unimplemented
-			halted = true;
+			//LD B, A
+			//1 4
+			//- - - -
+
+			BCRegister.hi = AFRegister.hi;
+
+			advanceCounter(1);
 			break;
 		}
 
@@ -1551,7 +1572,7 @@ void Processor::emulateCycle(MemoryManager memory)
 			Logger::log(Logger::DEBUG, "JPnn");
 
 			//Complete Jump to New Value
-			programCounter = getImmediate();
+			programCounter = getImmediate16();
 
 			break;
 		}

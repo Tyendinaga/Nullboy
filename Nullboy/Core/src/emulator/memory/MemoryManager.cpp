@@ -142,8 +142,6 @@ char MemoryManager::readByte(int address)
 		//Logger::log(Logger::DEBUG, "Bank XX: " + location);
 		int localAddress = address - 0x4000;
 		data = bank01[localAddress];
-
-
 	}
 
 	return data;

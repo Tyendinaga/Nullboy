@@ -45,7 +45,7 @@ class Processor
 		//Program Counter 
 		unsigned short programCounter;
 
-		unsigned short getImmediate();
+		unsigned short getImmediate16();
 		void advanceCounter(int value);
 
 	public:
