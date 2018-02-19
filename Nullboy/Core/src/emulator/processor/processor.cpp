@@ -45,12 +45,41 @@ unsigned short Processor::getImmediate16()
 	return temp.both;
 }
 
+unsigned char Processor::getImmediate8()
+{
+	return memory.readByte(programCounter + 1);
+}
+
+void Processor::writeData16(int address, gameboyRegister data)
+{
+	memory.writeByte(address, data.lo);
+	memory.writeByte(address+1, data.hi);
+}
+
+void Processor::writeData8(int address, char data)
+{
+	memory.writeByte(address, data);
+}
+
+unsigned short Processor::readData16(int address)
+{
+	gameboyRegister temp;
+
+	temp.lo = memory.readByte(address);
+	temp.hi = memory.readByte(address+1);
+	
+	return temp.both;
+}
+
+unsigned char Processor::readData8(int address)
+{
+	return memory.readByte(address);
+}
+
 void Processor::advanceCounter(int value)
 {
 	programCounter = programCounter + value;
 }
-
-
 
 void Processor::emulateCycle(MemoryManager memory)
 {
@@ -178,8 +207,13 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x0E:
 		{
-			//Unimplemented
-			halted = true;
+			//LD C, d8
+			//2 8
+			//- - - -
+
+			BCRegister.lo = getImmediate8();
+			advanceCounter(2);
+
 			break;
 		}
 
@@ -223,8 +257,13 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x12:
 		{
-			//Unimplemented
-			halted = true;
+			//LD(DE), A
+			//1  8
+			//- - - -
+
+			writeData8(DERegister.both, AFRegister.hi);
+			advanceCounter(1);
+
 			break;
 		}
 
@@ -293,6 +332,14 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x1C:
 		{
+			//INC E
+			//1 4
+			//Z 0 H -
+			
+			flagRegister test;
+
+			//advanceCounter(1);
+
 			//Unimplemented
 			halted = true;
 			break;
@@ -404,8 +451,14 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0x2A:
 		{
-			//Unimplemented
-			halted = true;
+			//LD A, (HL + )
+			//1  8
+			//- - - -
+
+			AFRegister.hi = readData8(HLRegister.both);
+			HLRegister.both++;
+			advanceCounter(1);
+
 			break;
 		}
 
@@ -1790,8 +1843,15 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xE0:
 		{
-			//Unimplemented
-			halted = true;
+			//LDH(a8), A
+			//2 12
+			//- - - -
+
+			int address = 0xFF00 + getImmediate8();
+			writeData8(address, AFRegister.hi);
+
+			advanceCounter(2);
+
 			break;
 		}
 

@@ -17,6 +17,21 @@ struct gameboyRegister
 	};
 };
 
+struct flagRegister
+{
+	union
+	{
+		struct
+		{
+			bool z;
+			bool n;
+			bool h;
+			bool c;
+		};
+		char flags;
+	};
+};
+
 //Something
 
 
@@ -46,6 +61,14 @@ class Processor
 		unsigned short programCounter;
 
 		unsigned short getImmediate16();
+		unsigned char getImmediate8();
+
+		void writeData16(int address, gameboyRegister data);
+		void writeData8(int address, char data);
+
+		unsigned short readData16(int address);
+		unsigned char readData8(int address);
+
 		void advanceCounter(int value);
 
 	public:
