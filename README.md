@@ -5,3 +5,4 @@ Crappy Gameboy Emulation Project
 
 ## Instructions
 
+-f [Directory+Filename]
