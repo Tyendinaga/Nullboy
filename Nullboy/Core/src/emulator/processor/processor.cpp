@@ -5,8 +5,6 @@
 Processor::Processor()
 {
 
-	
-
 }
 
 void Processor::initialize()
@@ -32,15 +30,37 @@ void Processor::initialize()
 
 }
 
+bool Processor::isHalted()
+{
+	return halted;
+}
+
+unsigned short Processor::getImmediate()
+{
+	//Get 16 Bit Immediate Value			
+	gameboyRegister temp;
+	temp.lo = memory.readByte(programCounter + 1);
+	temp.hi = memory.readByte(programCounter + 2);
+
+	return temp.both;
+}
+
+void Processor::advanceCounter(int value)
+{
+	programCounter = programCounter + value;
+}
+
+
+
 void Processor::emulateCycle(MemoryManager memory)
 {
 
-	//Hit a Road Block. Not sure how to decode the Z80 Codes
-	//Turns out I have to read them as 8bits instead of 16bits. 
-	//This means a lot of bitwise operations in my future. 
+	//Reassign Memory
+	this->memory = memory;
+	
+	//Get Instruction
 	opcode = memory.readByte(programCounter);
 	
-
 	//Do Magic
 	switch (opcode)
 	{
@@ -1530,14 +1550,8 @@ void Processor::emulateCycle(MemoryManager memory)
 			//JUMP
 			Logger::log(Logger::DEBUG, "JPnn");
 
-			//Combine the Next two data values into a new Program Counter Value
-			//TODO Shorten this into a single line. 
-			unsigned short target = memory.readByte(programCounter + 1);
-			target <<= CHAR_BIT;
-			target += memory.readByte(programCounter + 2);
-
 			//Complete Jump to New Value
-			programCounter = target;
+			programCounter = getImmediate();
 
 			break;
 		}
@@ -2014,8 +2028,7 @@ void Processor::emulateCycle(MemoryManager memory)
 
 }
 
-bool Processor::isHalted()
-{
-	return halted;
-}
+
+
+
 

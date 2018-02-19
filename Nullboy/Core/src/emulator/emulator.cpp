@@ -33,8 +33,7 @@ void Emulator::run()
 		if (!processor.isHalted())
 		{
 			processor.emulateCycle(memory);
-			window.drawGraphics();
-			
+			//window.drawGraphics();
 		}
 
 

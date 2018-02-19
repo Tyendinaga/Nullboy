@@ -8,14 +8,18 @@ struct gameboyRegister
 {
 	union
 	{
-		unsigned short both;
 		struct
 		{
-			char hi;
 			char lo;
+			char hi;
 		};
+		unsigned short both;
 	};
 };
+
+//Something
+
+
 
 class Processor
 {
@@ -31,11 +35,18 @@ class Processor
 		gameboyRegister DERegister;
 		gameboyRegister HLRegister;
 
+
+		//Memory Reference
+		MemoryManager memory;
+
 		//Stack & Stack Pointer
 		unsigned short stackPointer;
 
 		//Program Counter 
 		unsigned short programCounter;
+
+		unsigned short getImmediate();
+		void advanceCounter(int value);
 
 	public:
 		Processor();
