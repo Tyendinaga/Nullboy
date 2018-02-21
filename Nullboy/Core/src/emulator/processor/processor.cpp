@@ -1681,7 +1681,7 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xCB:
 		{
-			//Unimplemented
+			//CB Prefixed Instructions, Unimplemented
 			halted = true;
 			break;
 		}
@@ -1745,7 +1745,7 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xD3:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
@@ -1801,7 +1801,7 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xDB:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
@@ -1815,7 +1815,7 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xDD:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
@@ -1871,14 +1871,14 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xE3:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
 
 		case 0xE4:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
@@ -1927,21 +1927,21 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xEB:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
 
 		case 0xEC:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
 
 		case 0xED:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
@@ -1997,7 +1997,7 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xF4:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
@@ -2053,14 +2053,14 @@ void Processor::emulateCycle(MemoryManager memory)
 
 		case 0xFC:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
 
 		case 0xFD:
 		{
-			//Unimplemented
+			//Removed from CPU
 			halted = true;
 			break;
 		}
