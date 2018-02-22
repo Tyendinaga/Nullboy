@@ -40,43 +40,46 @@ class Processor
 {
 
 	private:
-		bool halted; //Debug use Only
-
-		//1 Byte?
+		
+		//
+		bool halted;
+	
+		//
 		unsigned char opcode;
 
+		//Registers
 		gameboyRegister AFRegister;
 		gameboyRegister BCRegister;
 		gameboyRegister DERegister;
 		gameboyRegister HLRegister;
-
+		unsigned short stackPointer;
+		unsigned short programCounter;
 
 		//Memory Reference
 		MemoryManager memory;
 
-		//Stack & Stack Pointer
-		unsigned short stackPointer;
 
-		//Program Counter 
-		unsigned short programCounter;
 
+		//Memory Reads and Writes
 		unsigned short getImmediate16();
 		unsigned char getImmediate8();
-
 		void writeData16(int address, gameboyRegister data);
 		void writeData8(int address, char data);
-
 		unsigned short readData16(int address);
 		unsigned char readData8(int address);
 
+		void processOpCode();
+		void processExtendedOpCode();
+
+		//Handles Program Counter
 		void advanceCounter(int value);
 
 	public:
 		Processor();
 
+		
 		void initialize();
 		void emulateCycle(MemoryManager memory);
-
 		bool isHalted();
 
 };
