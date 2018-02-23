@@ -7,6 +7,14 @@ Processor::Processor()
 
 }
 
+
+// _____  ______  _____ ______ _______ 
+//|  __ \|  ____|/ ____|  ____|__   __|
+//| |__) | |__  | (___ | |__     | |   
+//|  _  /|  __|  \___ \|  __|    | |   
+//| | \ \| |____ ____) | |____   | |   
+//|_|  \_\______|_____/|______|  |_|   
+
 void Processor::initialize()
 {
 	//MAKING EVERYTHING NICE AND GOOD TO START
@@ -26,14 +34,22 @@ void Processor::initialize()
 	programCounter = 0x0100;
 
 	//Debug Flagging
-	halted = false;
+	errorState = false;
 
 }
 
-bool Processor::isHalted()
+bool Processor::inErrorState()
 {
-	return halted;
+	return errorState;
 }
+
+
+// __  __ ______ __  __  ____  _______     __   ____  _____  ______ _____         _______ _____ ____  _   _  _____ 
+//|  \/  |  ____|  \/  |/ __ \|  __ \ \   / /  / __ \|  __ \|  ____|  __ \     /\|__   __|_   _/ __ \| \ | |/ ____|
+//| \  / | |__  | \  / | |  | | |__) \ \_/ /  | |  | | |__) | |__  | |__) |   /  \  | |    | || |  | |  \| | (___  
+//| |\/| |  __| | |\/| | |  | |  _  / \   /   | |  | |  ___/|  __| |  _  /   / /\ \ | |    | || |  | | . ` |\___ \ 
+//| |  | | |____| |  | | |__| | | \ \  | |    | |__| | |    | |____| | \ \  / ____ \| |   _| || |__| | |\  |____) |
+//|_|  |_|______|_|  |_|\____/|_|  \_\ |_|     \____/|_|    |______|_|  \_\/_/    \_\_|  |_____\____/|_| \_|_____/ 
 
 unsigned short Processor::getImmediate16()
 {
@@ -76,10 +92,30 @@ unsigned char Processor::readData8(int address)
 	return memory.readByte(address);
 }
 
+// _      ____   _____ _____ _____          _         ____  _____  ______ _____         _______ _____ ____  _   _  _____ 
+//| |    / __ \ / ____|_   _/ ____|   /\   | |       / __ \|  __ \|  ____|  __ \     /\|__   __|_   _/ __ \| \ | |/ ____|
+//| |   | |  | | |  __  | || |       /  \  | |      | |  | | |__) | |__  | |__) |   /  \  | |    | || |  | |  \| | (___  
+//| |   | |  | | | |_ | | || |      / /\ \ | |      | |  | |  ___/|  __| |  _  /   / /\ \ | |    | || |  | | . ` |\___ \ 
+//| |___| |__| | |__| |_| || |____ / ____ \| |____  | |__| | |    | |____| | \ \  / ____ \| |   _| || |__| | |\  |____) |
+//|______\____/ \_____|_____\_____/_/    \_\______|  \____/|_|    |______|_|  \_\/_/    \_\_|  |_____\____/|_| \_|_____/ 
+
 void Processor::advanceCounter(int value)
 {
 	programCounter = programCounter + value;
 }
+
+void Processor::handleCycles(int value)
+{
+	//DO NOTHING
+}
+
+// _____ _   _  _____ _______ _____  _    _  _____ _______ _____ ____  _   _   _    _          _   _ _____  _      _____ _   _  _____ 
+//|_   _| \ | |/ ____|__   __|  __ \| |  | |/ ____|__   __|_   _/ __ \| \ | | | |  | |   /\   | \ | |  __ \| |    |_   _| \ | |/ ____|
+//  | | |  \| | (___    | |  | |__) | |  | | |       | |    | || |  | |  \| | | |__| |  /  \  |  \| | |  | | |      | | |  \| | |  __ 
+//  | | | . ` |\___ \   | |  |  _  /| |  | | |       | |    | || |  | | . ` | |  __  | / /\ \ | . ` | |  | | |      | | | . ` | | |_ |
+// _| |_| |\  |____) |  | |  | | \ \| |__| | |____   | |   _| || |__| | |\  | | |  | |/ ____ \| |\  | |__| | |____ _| |_| |\  | |__| |
+//|_____|_| \_|_____/   |_|  |_|  \_\\____/ \_____|  |_|  |_____\____/|_| \_| |_|  |_/_/    \_\_| \_|_____/|______|_____|_| \_|\_____|
+
 
 void Processor::emulateCycle(MemoryManager memory)
 {
@@ -93,7 +129,7 @@ void Processor::emulateCycle(MemoryManager memory)
 	//Handle Instruction
 	processOpCode();
 
-	if (!halted)
+	if (!errorState)
 	{
 		//programCounter += 1;
 		Logger::log(Logger::DEBUG, "Processed Code: ", opcode);
@@ -138,91 +174,91 @@ void Processor::processOpCode()
 		case 0x01:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x02:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x03:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x04:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x05:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x06:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x07:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x08:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x09:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -241,7 +277,7 @@ void Processor::processOpCode()
 		case 0x0F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -261,7 +297,7 @@ void Processor::processOpCode()
 			//Stops Gameboy until a Button proess
 
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -291,63 +327,63 @@ void Processor::processOpCode()
 		case 0x13:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x14:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x15:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x16:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x17:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x18:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x19:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -362,28 +398,28 @@ void Processor::processOpCode()
 			//advanceCounter(1);
 
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -397,7 +433,7 @@ void Processor::processOpCode()
 		case 0x20:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -417,56 +453,56 @@ void Processor::processOpCode()
 		case 0x22:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x23:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x24:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x25:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x26:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x27:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x28:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x29:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -486,35 +522,35 @@ void Processor::processOpCode()
 		case 0x2B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -528,112 +564,112 @@ void Processor::processOpCode()
 		case 0x30:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x31:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x32:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x33:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x34:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x35:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x36:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x37:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x38:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x39:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -647,49 +683,49 @@ void Processor::processOpCode()
 		case 0x40:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x41:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x42:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x43:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x44:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x45:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x46:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -747,35 +783,35 @@ void Processor::processOpCode()
 		case 0x4B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -789,112 +825,112 @@ void Processor::processOpCode()
 		case 0x50:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x51:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x52:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x53:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x54:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x55:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x56:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x57:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x58:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x59:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -908,112 +944,112 @@ void Processor::processOpCode()
 		case 0x60:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x61:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x62:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x63:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x64:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x65:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x66:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x67:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x68:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x69:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1027,112 +1063,112 @@ void Processor::processOpCode()
 		case 0x70:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x71:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x72:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x73:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x74:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x75:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x76:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x77:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x78:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x79:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1146,112 +1182,112 @@ void Processor::processOpCode()
 		case 0x80:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x81:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x82:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x83:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x84:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x85:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x86:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x87:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x88:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x89:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1265,112 +1301,112 @@ void Processor::processOpCode()
 		case 0x90:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x91:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x92:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x93:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x94:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x95:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x96:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x97:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x98:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x99:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1384,112 +1420,112 @@ void Processor::processOpCode()
 		case 0xA0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1503,112 +1539,112 @@ void Processor::processOpCode()
 		case 0xB0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1622,21 +1658,21 @@ void Processor::processOpCode()
 		case 0xC0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1654,49 +1690,49 @@ void Processor::processOpCode()
 		case 0xC4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1709,28 +1745,28 @@ void Processor::processOpCode()
 		case 0xCC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1745,112 +1781,112 @@ void Processor::processOpCode()
 		case 0xD0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD3:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDB:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDD:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1878,105 +1914,105 @@ void Processor::processOpCode()
 		case 0xE1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE3:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE4:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEB:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEC:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xED:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -1990,112 +2026,112 @@ void Processor::processOpCode()
 		case 0xF0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF4:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFC:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFD:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2109,7 +2145,7 @@ void Processor::processOpCode()
 		//Situation Normal, All fucked up. 
 		default:
 		{
-			halted = true;
+			errorState = true;
 			break;
 		}
 	}
@@ -2135,112 +2171,112 @@ void Processor::processExtendedOpCode()
 		case 0x00:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x01:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x02:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x03:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x04:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x05:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x06:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x07:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x08:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x09:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x0F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2254,112 +2290,112 @@ void Processor::processExtendedOpCode()
 		case 0x10:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x11:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x12:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x13:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x14:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x15:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x16:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x17:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x18:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x19:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x1F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2373,112 +2409,112 @@ void Processor::processExtendedOpCode()
 		case 0x20:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x21:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x22:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x23:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x24:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x25:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x26:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x27:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x28:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x29:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x2F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2492,112 +2528,112 @@ void Processor::processExtendedOpCode()
 		case 0x30:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x31:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x32:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x33:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x34:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x35:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x36:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x37:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x38:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x39:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x3F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2611,112 +2647,112 @@ void Processor::processExtendedOpCode()
 		case 0x40:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x41:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x42:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x43:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x44:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x45:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x46:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x47:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x48:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x49:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x4F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2730,112 +2766,112 @@ void Processor::processExtendedOpCode()
 		case 0x50:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x51:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x52:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x53:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x54:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x55:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x56:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x57:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x58:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x59:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x5F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2849,112 +2885,112 @@ void Processor::processExtendedOpCode()
 		case 0x60:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x61:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x62:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x63:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x64:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x65:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x66:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x67:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x68:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x69:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x6F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -2968,112 +3004,112 @@ void Processor::processExtendedOpCode()
 		case 0x70:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x71:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x72:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x73:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x74:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x75:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x76:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x77:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x78:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x79:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x7F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3087,112 +3123,112 @@ void Processor::processExtendedOpCode()
 		case 0x80:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x81:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x82:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x83:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x84:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x85:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x86:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x87:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x88:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x89:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x8F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3206,112 +3242,112 @@ void Processor::processExtendedOpCode()
 		case 0x90:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x91:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x92:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x93:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x94:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x95:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x96:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x97:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x98:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x99:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9A:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9B:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9C:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9D:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9E:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0x9F:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3325,112 +3361,112 @@ void Processor::processExtendedOpCode()
 		case 0xA0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xA9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xAF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3444,112 +3480,112 @@ void Processor::processExtendedOpCode()
 		case 0xB0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xB9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xBF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3563,112 +3599,112 @@ void Processor::processExtendedOpCode()
 		case 0xC0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xC9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xCF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3683,112 +3719,112 @@ void Processor::processExtendedOpCode()
 		case 0xD0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xD9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDD:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xDF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3802,112 +3838,112 @@ void Processor::processExtendedOpCode()
 		case 0xE0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xE9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEC:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xED:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xEF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -3921,112 +3957,112 @@ void Processor::processExtendedOpCode()
 		case 0xF0:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF1:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF2:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF3:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF4:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF5:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF6:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF7:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF8:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xF9:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFA:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFB:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFC:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFD:
 		{
 			//Removed from CPU
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFE:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
 		case 0xFF:
 		{
 			//Unimplemented
-			halted = true;
+			errorState = true;
 			break;
 		}
 
@@ -4039,7 +4075,7 @@ void Processor::processExtendedOpCode()
 
 		default:
 		{
-			halted = true;
+			errorState = true;
 			break;
 		}
 	}

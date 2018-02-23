@@ -7,6 +7,11 @@ MemoryManager::MemoryManager()
 
 }
 
+void MemoryManager::reset()
+{
+	//Do Somethting
+}
+
 //Write Information to somewhere on the memory map
 void MemoryManager::writeByte(int address, char data)
 {

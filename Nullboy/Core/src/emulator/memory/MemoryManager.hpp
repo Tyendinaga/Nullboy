@@ -78,6 +78,7 @@ class MemoryManager
 
 	public:
 		MemoryManager();
+		void reset();
 
 		void writeByte(int address, char data);
 		char readByte(int address);

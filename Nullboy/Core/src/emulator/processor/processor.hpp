@@ -23,12 +23,16 @@ struct flagRegister
 	{
 		struct
 		{
-			bool z;
-			bool n;
-			bool h;
-			bool c;
+			unsigned z7:1;
+			unsigned n6:1;
+			unsigned h5:1;
+			unsigned c3:1;
+			unsigned x3:1;
+			unsigned x2:1;
+			unsigned x1:1;
+			unsigned x0:1;
 		};
-		char flags;
+		unsigned char flags;
 	};
 };
 
@@ -41,8 +45,8 @@ class Processor
 
 	private:
 		
-		//
-		bool halted;
+		//Unimplemented Instruction
+		bool errorState;
 	
 		//
 		unsigned char opcode;
@@ -73,6 +77,9 @@ class Processor
 
 		//Handles Program Counter
 		void advanceCounter(int value);
+		void handleCycles(int value);
+
+		
 
 	public:
 		Processor();
@@ -80,7 +87,7 @@ class Processor
 		
 		void initialize();
 		void emulateCycle(MemoryManager memory);
-		bool isHalted();
+		bool inErrorState();
 
 };
 

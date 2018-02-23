@@ -30,7 +30,7 @@ void Emulator::run()
 	{
 		//While things aren't burning down we will process things
 		//-------------------------------------------------------
-		if (!processor.isHalted())
+		if (!processor.inErrorState())
 		{
 			processor.emulateCycle(memory);
 			//window.drawGraphics();
