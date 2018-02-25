@@ -26,7 +26,7 @@ struct flagRegister
 			unsigned z7:1;
 			unsigned n6:1;
 			unsigned h5:1;
-			unsigned c3:1;
+			unsigned c4:1;
 			unsigned x3:1;
 			unsigned x2:1;
 			unsigned x1:1;

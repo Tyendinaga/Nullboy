@@ -426,7 +426,19 @@ void Processor::processOpCode()
 			//1 4
 			//Z 0 H -
 
-			flagRegister test;
+			
+
+			DERegister.lo++;
+
+			//Copy Flag Register
+			flagRegister temp; 
+			temp.flags = AFRegister.lo;
+			temp.z7 = 0;
+			temp.n6 = 0;
+			temp.h5;
+
+			//Reset Flags Register
+			AFRegister.lo = temp.flags;
 
 			//advanceCounter(1);
 
