@@ -1,3 +1,6 @@
+//Standard Includes
+#include <bitset>
+
 //Custom Includes
 #include "processor.hpp"
 #include "utility\logging\logger.hpp"
@@ -420,30 +423,52 @@ void Processor::processOpCode()
 			break;
 		}
 
+		//TODO: Compress the hell out of this into reuseable functions
 		case 0x1C:
 		{
 			//INC E
 			//1 4
 			//Z 0 H -
 
-			
+			std::bitset<8> before (DERegister.lo);
 
 			DERegister.lo++;
 
+			std::bitset<8> after (DERegister.lo);
+
 			//Copy Flag Register
-			flagRegister temp; 
-			temp.flags = AFRegister.lo;
-			temp.z7 = 0;
-			temp.n6 = 0;
-			temp.h5;
+			flagRegister newFlags; 
 
-			//Reset Flags Register
-			AFRegister.lo = temp.flags;
+			//Update Flags
+			newFlags.flags = AFRegister.lo;
 
-			//advanceCounter(1);
+			//If Zero we set the Zero Flag
+			if (DERegister.lo == 0x00)
+			{
+				newFlags.z7 = 1;
+			}
+			else
+			{
+				newFlags.z7 = 0;
+			}
 
-			//Unimplemented
-			errorState = true;
+			//N Flag is Reset
+			newFlags.n6 = 0;
+
+			if (before.test(3) && !before.test(3))
+			{
+				newFlags.h5 = 1;
+			}
+			else
+			{
+				newFlags.h5 = 0;
+			}
+
+			//Update Register
+			AFRegister.lo = newFlags.flags;
+
+			advanceCounter(1);
+
 			break;
 		}
 
